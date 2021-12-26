@@ -43,7 +43,6 @@ jobs:
       - name: Deploy
         run: |
           docker run --rm \
-                     -v $(pwd):/code \
                      -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
                      -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
                      -e AWS_REGION=${{ secrets.AWS_DEFAULT_REGION }} \
