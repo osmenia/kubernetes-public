@@ -1,0 +1,54 @@
+name: Pipeline
+on:
+  workflow_call:
+    inputs:
+      application:
+        type: string
+        description: 'Application to deploy'
+        required: true
+        default: ''
+      namespace:
+        type: string
+        description: 'Namespace where to deploy'
+        required: true
+      version:
+        type: string
+        description: 'Application version to deploy'
+        required: true
+      image:
+        type: string
+        required: true
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      AWS_DEFAULT_REGION:
+        required: true
+jobs:
+  deploy:
+    runs-on:
+    - kubernetes
+    - mini
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Deploy
+        run: |
+          docker run -it \
+                     --rm \
+                     -v $(pwd):/code \
+                     -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
+                     -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
+                     -e AWS_REGION=${{ secrets.AWS_DEFAULT_REGION }} \
+                     ${{ github.event.inputs.image }} \
+                     diff ${{ github.event.inputs.application }} \
+                             ${{ github.event.inputs.namespace }} \
+                             ${{ github.event.inputs.version }}
