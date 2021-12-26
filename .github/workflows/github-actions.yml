@@ -47,7 +47,7 @@ jobs:
                      -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
                      -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
                      -e AWS_REGION=${{ secrets.AWS_DEFAULT_REGION }} \
-                     ${{ github.event.inputs.image }} \
-                     diff ${{ github.event.inputs.application }} \
-                             ${{ github.event.inputs.namespace }} \
-                             ${{ github.event.inputs.version }}
+                     ${{ inputs.image }} \
+                     diff ${{ inputs.application }} \
+                             ${{ inputs.namespace }} \
+                             ${{ inputs.version }}
