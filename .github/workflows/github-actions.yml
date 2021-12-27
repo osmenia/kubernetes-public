@@ -48,6 +48,14 @@ jobs:
                      -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
                      -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
                      -e AWS_REGION=${{ secrets.AWS_DEFAULT_REGION }} \
+                     -e KUBERNETES_SERVICE_PORT_HTTPS=${KUBERNETES_SERVICE_PORT_HTTPS} \
+                     -e KUBERNETES_SERVICE_PORT=${KUBERNETES_SERVICE_PORT} \
+                     -e KUBERNETES_PORT_443_TCP=${KUBERNETES_PORT_443_TCP} \
+                     -e KUBERNETES_PORT_443_TCP_PROTO=${KUBERNETES_PORT_443_TCP_PROTO} \
+                     -e KUBERNETES_PORT_443_TCP_ADDR=${KUBERNETES_PORT_443_TCP_ADDR} \
+                     -e KUBERNETES_SERVICE_HOST=${KUBERNETES_SERVICE_HOST} \
+                     -e KUBERNETES_PORT=${KUBERNETES_PORT} \
+                     -e KUBERNETES_PORT_443_TCP_PORT=${KUBERNETES_PORT_443_TCP_PORT} \
                      ${{ inputs.image }} \
                      diff ${{ inputs.application }} \
                              ${{ inputs.namespace }} \
