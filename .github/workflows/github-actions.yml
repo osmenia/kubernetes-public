@@ -51,6 +51,6 @@ jobs:
                      -e KUBERNETES_SERVICE_HOST=$KUBERNETES_SERVICE_HOST \
                      -v /var/run/secrets/kubernetes.io/serviceaccount:/var/run/secrets/kubernetes.io/serviceaccount \
                      ${{ inputs.image }} \
-                     diff ${{ inputs.application }} \
+                     install ${{ inputs.application }} \
                              ${{ inputs.namespace }} \
                              ${{ inputs.version }}
